@@ -3,6 +3,9 @@ import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
+// In your JavaScript file (e.g., index.js or App.js)
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 const Header = () => {
   const [show, setShow] = useState(false);
   //assigning location variable
@@ -35,7 +38,8 @@ const Header = () => {
                     : "/"
                 }
               >
-                <i className="fa fa-tachometer"></i>
+                <i class="fas fa-tachometer-alt"></i>
+
                 <br />
                 <span>Dashboard</span>
               </Link>
@@ -52,7 +56,7 @@ const Header = () => {
                     : "/"
                 }
               >
-                <i className="fa fa-shopping-cart"></i>
+                <i className="fas fa-shopping-cart"></i>
                 <br />
                 <span>Products</span>
               </Link>
@@ -69,7 +73,7 @@ const Header = () => {
                     : "/"
                 }
               >
-                <i className="fa fa-user-o"></i>
+                <i class="far fa-user"></i>
                 <br />
                 <span>Account</span>
               </Link>

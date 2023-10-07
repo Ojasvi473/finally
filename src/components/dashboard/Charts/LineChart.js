@@ -23,7 +23,7 @@ class LineChart extends Component {
           curve: "smooth",
           width: "3",
         },
-        colors: ["#f7604c", "#a8d582", "#4ed6b8"],
+        colors: ["#dc3545", "#800080", "#fd7e14"],
       },
       series: [
         {

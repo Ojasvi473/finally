@@ -10,8 +10,9 @@ class HorizontalChart extends Component {
       options: {
         plotOptions: {
           bar: {
-            borderRadius: 4,
+            borderRadius: 1,
             horizontal: true,
+            distributed: true,
             barHeight: "40%",
           },
         },
@@ -30,9 +31,15 @@ class HorizontalChart extends Component {
             JSON.parse(localStorage.getItem("dashboardPage")).performance
           ),
         },
-        fill: {
-          colors: ["#ffffff", "#E91E63", "#9C27B0"],
-        },
+        colors: [
+          "#00FFFF",
+          "#0000FF",
+          "#008000",
+          "#FFA500",
+          "#800080",
+          "#FF0000",
+          "#FFFF00",
+        ],
       },
       series: [
         {
@@ -44,6 +51,7 @@ class HorizontalChart extends Component {
       ],
     };
   }
+
   render() {
     return (
       <div className={styles.chartcontainer}>
@@ -57,4 +65,5 @@ class HorizontalChart extends Component {
     );
   }
 }
+
 export default HorizontalChart;

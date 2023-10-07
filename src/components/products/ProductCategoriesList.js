@@ -56,7 +56,7 @@ const ProductCategoriesList = () => {
   };
 
   return (
-    <div className={styles.catcontainer}>
+    <div className={styles.catcontainer} style={{ height: "420px" }}>
       <h2>Product Categories</h2>
       {showModal && (
         <div className={style.modal}>
@@ -80,7 +80,7 @@ const ProductCategoriesList = () => {
 
       {!showModal && (
         <>
-          <div className={styles.tablebody}>
+          <div className={styles.tablebody} style={{ height: "271px" }}>
             <table>
               <tbody>
                 {productcategories.map((item, i) => (
@@ -88,7 +88,7 @@ const ProductCategoriesList = () => {
                     <td>{item}</td>
                     <td>
                       <i
-                        className="fa fa-trash-o"
+                        class="far fa-trash-alt tm-product-delete-icon"
                         id={item}
                         onClick={deleteHandler}
                       ></i>

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Products.module.css";
+import "../products/ProductSlider.css";
 
-const ProductsList = () => {
+const ProductsList = ({ hideCategory }) => {
   const [productlist, setProductlist] = useState([]);
   const [selected, setSelected] = useState([]);
   const [modal, setModal] = useState(false);
-
   const [category, setCategory] = useState("");
   const [description, setdescription] = useState("");
   const [expireDate, setexpireDate] = useState("");
@@ -51,7 +51,6 @@ const ProductsList = () => {
     let checkboxAfterDelete = productlist.filter(
       (item) => !selected.includes(item.name)
     );
-    // console.log(checkboxAfterDelete);
 
     let obj = JSON.parse(localStorage.getItem("productsPage"));
     obj = {
@@ -71,12 +70,15 @@ const ProductsList = () => {
   };
 
   const addNewProduct = () => {
+    hideCategory(false);
     setModal(true);
   };
 
   const addProductHandler = () => {
     let obj = JSON.parse(localStorage.getItem("productsPage"));
-    console.log("before addding product:", obj);
+    console.log("before adding product:", obj);
+
+    console.log({ category, description, expireDate, name, stock, unitSold });
 
     if (
       category === "" ||
@@ -86,7 +88,7 @@ const ProductsList = () => {
       stock === "" ||
       unitSold === ""
     ) {
-      alert("Please enter all details for product");
+      alert("Please enter all details for the product.");
       return;
     }
 
@@ -99,7 +101,7 @@ const ProductsList = () => {
       unitSold: unitSold,
     });
 
-    console.log("after addding product:", obj);
+    console.log("after adding product:", obj);
 
     localStorage.setItem("productsPage", JSON.stringify(obj));
     setProductlist(
@@ -116,8 +118,10 @@ const ProductsList = () => {
     <>
       {!modal && (
         <div>
-          <div className={styles.tablebody}>
-            <h2>Products</h2>
+          <div
+            className={[styles.addproductmodal, styles.tablebody].join(" ")}
+            style={{ height: "430px" }}
+          >
             <table>
               <thead>
                 <tr>
@@ -133,12 +137,10 @@ const ProductsList = () => {
                 {productlist.map((item, i) => (
                   <tr key={i}>
                     <td id={i}>
-                      <input
-                        type="checkbox"
-                        id={item.name}
-                        // value={checked}
-                        onChange={checkboxHandler}
-                      ></input>
+                      <label className={styles.roundedCheckbox}>
+                        <input type="checkbox" onChange={checkboxHandler} />
+                        <span className={styles.checkmark}></span>
+                      </label>
                     </td>
                     <td>{item.name}</td>
                     <td>{item.unitSold}</td>
@@ -146,7 +148,7 @@ const ProductsList = () => {
                     <td>{item.expireDate}</td>
                     <td>
                       <i
-                        className="fa fa-trash-o"
+                        className="far fa-trash-alt tm-product-delete-icon"
                         id={item.name}
                         onClick={deleteHandler}
                       ></i>
@@ -167,47 +169,76 @@ const ProductsList = () => {
       {modal && (
         <div className={styles.addproductmodal}>
           <h2>Add Product</h2>
-          <label htmlFor="Category">Category</label>
+
           <form onSubmit={selectDeleteHandler}>
-            <input
-              type="text"
-              onChange={(e) => setCategory(e.target.value)}
-              value={category}
-            />
-            <label htmlFor="Description">Description</label>
-            <textarea
-              onChange={(e) => setdescription(e.target.value)}
-              value={description}
-            ></textarea>
-            <label htmlFor="Expiry Date">Expiry Date</label>
-            <input
-              type="date"
-              onChange={(e) => setexpireDate(e.target.value)}
-              value={expireDate}
-            />
             <label htmlFor="Name">Name</label>
             <input
               type="text"
               onChange={(e) => setName(e.target.value)}
               value={name}
             />
+            <label htmlFor="Description">Description</label>
+            <textarea
+              onChange={(e) => setdescription(e.target.value)}
+              value={description}
+            ></textarea>
+            <label htmlFor="Category">Category</label>
+
+            {/* <input
+              type="text"
+              onChange={(e) => setCategory(e.target.value)}
+              value={category}
+            /> */}
+            <select onChange={(e) => setCategory(e.target.value)}>
+              <option selected="" style={{ color: "#acc6de" }}>
+                Select category
+              </option>
+              <option value="1" style={{ color: "#acc6de" }}>
+                New Arrival
+              </option>
+              <option value="2" style={{ color: "#acc6de" }}>
+                Most Popular
+              </option>
+              <option value="3" style={{ color: "#acc6de" }}>
+                Trending
+              </option>
+            </select>
+
             <label htmlFor="Stock">Stock</label>
             <input
               type="text"
               onChange={(e) => setStock(e.target.value)}
               value={stock}
             />
-            <label htmlFor="Unit Sold">Unit Sold</label>
-            <input
-              type="text"
-              onChange={(e) => setUnitSold(e.target.value)}
-              value={unitSold}
-            />
+
+            <div className="display">
+              <label className="date" htmlFor="Expiry Date">
+                Expiry Date
+              </label>
+              <label className="unit" htmlFor="Unit Sold">
+                Unit Sold
+              </label>
+            </div>
+
+            <div>
+              <input
+                className="expire"
+                type="date"
+                onChange={(e) => setexpireDate(e.target.value)}
+                value={expireDate}
+              />
+            </div>
+            <div>
+              <input
+                className="unit-sold"
+                type="text"
+                onChange={(e) => setUnitSold(e.target.value)}
+                value={unitSold}
+              />
+            </div>
+
             <button className="btn" onClick={addProductHandler}>
               Add Product
-            </button>
-            <button className="btn" onClick={() => setModal(false)}>
-              Cancel
             </button>
           </form>
         </div>

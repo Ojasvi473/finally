@@ -49,8 +49,10 @@ const Login = () => {
     if (username === password && username !== "" && password !== "") {
       setShow(false);
       localStorage.setItem("loginStatus", true);
+      alert("Login Successfully");
       navigate("/dashboard");
-      console.log("login");
+
+      // console.log("login");
     } else {
       setShow(true);
     }
@@ -71,10 +73,6 @@ const Login = () => {
           </button>
 
           <br />
-          {/* <br />
-        <button type="submit" className="btn">
-          Forgot Your Password
-        </button> */}
         </form>
       </div>
     </div>
